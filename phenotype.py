@@ -3,6 +3,7 @@ from glob import glob
 import os
 from posixpath import basename
 import pandas
+import shutil
 import re
 
 def existent(path):
