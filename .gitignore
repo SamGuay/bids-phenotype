@@ -1,3 +1,9 @@
+# specific files and directories
+ds*/
+phenotype/
+*/sub-*/phenotype/*.tsv
+*/sub-*/ses-*/phenotype/*.tsv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

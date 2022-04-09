@@ -167,12 +167,12 @@ def cli():
     parser_convert = subparsers.add_parser(
         'convert', help='Convert CSV or Excel files to BIDS TSV files'
         )
-    parser_convert.add_argument('-i', '--input-dir', metavar='DIR',
+    parser_convert.add_argument('-i', '--input-dir', metavar='INDIR',
         type=readable, dest='input', required=True,
         help="""
             Input directory of CSVs and/or Excel files.
             """)
-    parser_convert.add_argument('-o', '--output-dir', metavar='DIR',
+    parser_convert.add_argument('-o', '--output-dir', metavar='OUTDIR',
         type=available, dest='output', required=True,
         help="""
             Output directory to write converted files which
@@ -183,19 +183,19 @@ def cli():
     parser_segregate = subparsers.add_parser(
         'segregate', help='Segregate phenotype files from the top of the tree'
         )
-    parser_segregate.add_argument('-i', '--input-dir', metavar='DIR',
+    parser_segregate.add_argument('-i', '--input-dir', metavar='INDIR',
         type=readable, dest='input', required=True,
         help="""
             Input BIDS top-level/root directory containing the phenotype folder
             """)
-    parser_segregate.add_argument('-o', '--output-dir', metavar='DIR',
+    parser_segregate.add_argument('-o', '--output-dir', metavar='OUTDIR',
         type=available, dest='output', required=True,
         help="""
             Output directory to write segregated files which
             can be the same as the input directory
             """)
     parser_segregate.add_argument(choices=['subject', 'session'],
-        type=str, dest='level', required=True,
+        type=str, dest='level', 
         help="""
             Segregate to either the subject or session level
             """)
@@ -204,20 +204,20 @@ def cli():
     parser_aggregate = subparsers.add_parser(
         'aggregate', help='Aggregate phenotype files to the top of the tree'
         )
-    parser_aggregate.add_argument('-i', '--input-dir', metavar='DIR',
+    parser_aggregate.add_argument('-i', '--input-dir', metavar='INDIR',
         type=readable, dest='input', required=True,
         help="""
             Input BIDS top-level/root directory containing the subject/session
             segregated phenotype folders
             """)
-    parser_aggregate.add_argument('-o', '--output-dir', metavar='DIR',
+    parser_aggregate.add_argument('-o', '--output-dir', metavar='OUTDIR',
         type=available, dest='output', required=True,
         help="""
             Output directory to write aggregated files which
             can be the same as the input directory
             """)
-    parser_segregate.add_argument(choices=['subject', 'session'],
-        type=str, dest='level', required=True,
+    parser_aggregate.add_argument(choices=['subject', 'session'],
+        type=str, dest='level',
         help="""
             Aggregate from either the subject or session level
             """)
@@ -225,3 +225,5 @@ def cli():
 
     args = parser.parse_args()
     args.func(args)
+
+cli()
