@@ -26,7 +26,7 @@ def executable(path):
     return path
 
 def available(path):
-    parent = os.path.dirname(path)
+    parent = os.path.dirname(os.path.abspath(path))
     if not (os.path.exists(parent) and os.access(parent, os.W_OK)):
         raise argparse.ArgumentTypeError(f"""{path} is either not writeable or 
                                           the parent directory does not exist""")
