@@ -131,6 +131,11 @@ def aggregate(args):
     phenotypes = {}
     input  = os.path.abspath(args.input)
     output = os.path.abspath(args.output)
+    phenotype_dir = os.path.join(output, 'phenotype')
+
+    if not os.path.exists(phenotype_dir):
+        os.makedirs(phenotype_dir, exist_ok=True)
+
     participant_files = glob(os.path.join(input, 'sub-*', 'phenotype', '*.tsv'))
     session_files = glob(os.path.join(input, 'sub-*', 'ses-*', 'phenotype', '*.tsv'))
 
@@ -142,7 +147,7 @@ def aggregate(args):
 
     for file in files:
         basename = os.path.basename(file)
-        target = os.path.join(output, 'phenotype', basename)
+        target = os.path.join(phenotype_dir, basename)
 
         if target not in phenotypes:
             phenotypes[target] = [file]
