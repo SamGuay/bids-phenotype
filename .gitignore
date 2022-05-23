@@ -3,6 +3,8 @@ ds*/
 phenotype/
 */sub-*/phenotype/*.tsv
 */sub-*/ses-*/phenotype/*.tsv
+aggregated_*/
+segregated_*/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,32 +1,60 @@
 import argparse
 from glob import glob
 import os
-from posixpath import basename
 import pandas
 import shutil
 import re
 
 def existent(path):
+    """
+    Check if a path exists
+    :param path: Path to check
+    :return: Existent path as a string
+    """
     if not os.path.exists(path):
         raise argparse.ArgumentTypeError(f"{path} does not exist")
     return path
 
+
 def readable(path):
+    """
+    Check if a path is readable
+    :param path: Path to check
+    :return: Readable path as a string
+    """
     if not os.access(path, os.R_OK):
         raise argparse.ArgumentTypeError(f"{path} is not readable")
     return path
 
+
 def writeable(path):
+    """
+    Check if a path is writeable
+    :param path: Path to check
+    :return: Writeable path as a string
+    """
     if not os.access(path, os.W_OK):
         raise argparse.ArgumentTypeError(f"{path} is not writeable")
     return path
 
+
 def executable(path):
+    """
+    Check if a path is executable
+    :param path: Path to check
+    :return: Executable path as a string
+    """
     if not os.access(path, os.X_OK):
         raise argparse.ArgumentTypeError(f"{path} is not executable")
     return path
 
+
 def available(path):
+    """
+    Check if a path has a parent and is available to write to
+    :param path: Path to check
+    :return: Available path as a string
+    """
     parent = os.path.dirname(os.path.abspath(path))
     if not (os.path.exists(parent) and os.access(parent, os.W_OK)):
         raise argparse.ArgumentTypeError(f"""{path} is either not writeable or 
@@ -37,17 +65,21 @@ def available(path):
 
     return path
 
+
 # convert words and strings to exclusively alphanumerics for BIDS' sake
 def bidsify(input_name):
     return re.sub(r'[\W_]+', '', input_name)
+
 
 def csv2tsv(in_csv_file, out_tsv_file):
     dataframe = pandas.read_csv(in_csv_file, sep=',')
     dataframe.to_csv(out_tsv_file, sep='\t')
 
+
 def excel2tsv(in_excel_file, out_tsv_file):
     dataframe = pandas.read_excel(in_excel_file)
     dataframe.to_csv(out_tsv_file, sep='\t')
+
 
 def convert2tsv(args):
     convertables = []
@@ -78,6 +110,7 @@ def convert2tsv(args):
 
     # check for single column header
     # check for participant_id column
+
 
 def segregate(args):
     top_files = glob(os.path.join(os.path.abspath(args.input), 'phenotype', '*.tsv'))
@@ -161,6 +194,7 @@ def aggregate(args):
             dfs = [pandas.read_csv(file, sep='\t') for file in files]
             df = pandas.concat(dfs, ignore_index=True)
             df.to_csv(target, sep='\t', index=False)
+
 
 def cli():
     description = """
